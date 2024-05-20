@@ -1,12 +1,18 @@
 #!/bin/bash
 
-# Find the process using port 3000
-PID=$(lsof -t -i:3001)
+# Default port
+DEFAULT_PORT=3000
+
+# Get the port number from the first argument or use the default
+PORT=${1:-$DEFAULT_PORT}
+
+# Find the process using the specified port
+PID=$(lsof -t -i:$PORT)
 
 # Check if the PID variable is set to a non-empty string
 if [ -n "$PID" ]; then
-  echo "Killing process on port 3000 with PID: $PID"
+  echo "Killing process on port $PORT with PID: $PID"
   kill -9 $PID
 else
-  echo "No process found on port 3000."
+  echo "No process found on port $PORT."
 fi
