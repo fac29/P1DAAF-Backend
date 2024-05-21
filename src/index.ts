@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import * as fs from "fs/promises";
+import { determineFilter } from "./utils";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ type Question = {
   timestamp: Date;
 };
 
-type Questions = Array<Question>;
+export type Questions = Array<Question>;
 type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
 
 const app: Express = express();
