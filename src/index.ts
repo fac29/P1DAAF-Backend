@@ -1,37 +1,49 @@
-import express, { Express, Request, Response } from 'express'
-import dotenv from 'dotenv'
-import * as fs from 'fs'
+import express, { Express, Request, Response } from 'express';
+import dotenv from 'dotenv';
+import * as fs from 'fs/promises';
 
-dotenv.config()
+dotenv.config();
 
 // Type definition for question
-type difficulty = "easy" | "medium" | "hard"
-type question = {
-		id: number,
-		category: string,
-		difficulty: difficulty,
-		question: string,
-		options: Array<string>,
-		//Worth having an index instead?
-		answer: string,
-		favourited: true,
-		timestamp: Date
+type Difficulty = "easy" | "medium" | "hard";
+
+type Question = {
+    id: number;
+    category: string;
+    difficulty: Difficulty;
+    question: string;
+    options: Array<string>;
+    answer: string;
+    favourited: boolean; // This should be boolean instead of true
+    timestamp: Date;
+};
+
+type Questions = Array<Question>;
+type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
+
+const app: Express = express();
+const port = process.env.PORT || 3001;
+
+async function loadData(): Promise<OuterQuestion> {
+    const fileContent: string = await fs.readFile('data.json', 'utf8');
+    return JSON.parse(fileContent);
 }
-type questions = Array<question>
 
-const app: Express = express()
-const port = process.env.PORT || 3001
+let data: OuterQuestion;
 
-const data = JSON.parse(fs.readFileSync('data.json', 'utf8'))
-console.log(data)
-const questionsArray:questions = data.questions
+loadData().then((loadedData) => {
+    data = loadedData;
 
-// console.log(questionsArray[0])
+    const questionsArray: Questions = data.questions; // Corrected to data.questions
+    console.log(questionsArray[0]);
 
-app.get('/', (req: Request, res: Response) => {
-	res.send(data)
-})
+    app.get('/', (req: Request, res: Response) => {
+        res.json(data); // Use res.json to send data as a JSON object
+    });
 
-app.listen(port, () => {
-	console.log(`[server]: Server is running at http://localhost:${port}`)
-})
+    app.listen(port, () => {
+        console.log(`[server]: Server is running at http://localhost:${port}`);
+    });
+}).catch((err) => {
+    console.error('Error loading data:', err);
+});
