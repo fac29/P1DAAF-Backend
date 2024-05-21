@@ -46,6 +46,16 @@ loadData()
     app.get("/first", (req: Request, res: Response) => {
       res.json(questionsArray[0]); // Use res.json to send data as a JSON object
     });
+
+    app.get("/random/:num", (req: Request, res: Response) => {
+		const num = parseInt(req.params.num);
+		console.log(num)
+		let questionsDisplay: Questions = []
+		for (let i=0; i<num; i++) {
+			questionsDisplay.push(questionsArray[Math.floor(Math.random()*questionsArray.length)]);
+		}
+       res.json(questionsDisplay); // Use res.json to send data as a JSON object
+    });
   })
   .catch((err) => {
     console.error("Error loading data:", err);
