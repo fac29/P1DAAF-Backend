@@ -1,7 +1,8 @@
-import express, { Express, Request, Response } from 'express'
-import dotenv from 'dotenv'
-import * as fs from 'fs/promises'
+import express, { Express, Request, Response } from "express";
+import dotenv from "dotenv";
+import * as fs from "fs/promises";
 import { create } from 'domain'
+import { determineFilter } from "./utils";
 
 dotenv.config()
 
@@ -19,8 +20,8 @@ type Question = {
 	timestamp: Date
 }
 
-type Questions = Array<Question>
-type OuterQuestion = { questions: Questions } // Adjusted to match the JSON structure
+export type Questions = Array<Question>;
+type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
 
 const app: Express = express()
 const port = process.env.PORT || 3001

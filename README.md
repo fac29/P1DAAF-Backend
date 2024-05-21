@@ -1,6 +1,9 @@
 # P1DAAF
 Hello and Welcome to out Quiz App
 
+
+## Here is a flow of the user journey:
+
 ```mermaid
 
 flowchart TD
@@ -29,5 +32,7 @@ flowchart TD
     nack home| A 
 
 ```
+
+The user is able to filter questions by difficult, topic, favourites or just see random questions. 
 
 
