@@ -23,10 +23,8 @@ const app: Express = express()
 const port = process.env.PORT || 3001
 
 const data = JSON.parse(fs.readFileSync('data.json', 'utf8'))
-console.log(data)
-const questionsArray:questions = data.questions
 
-// console.log(questionsArray[0])
+const questionsArray:questions = data.questions
 
 app.get('/', (req: Request, res: Response) => {
 	res.send(data)
