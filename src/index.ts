@@ -38,7 +38,7 @@ app.listen(port, () => {
 function createUniqueRandomSet(n: number): Set<number> {
 	const valueSet = new Set<number>()
 	while (valueSet.size < n) {
-		valueSet.add(Math.floor(Math.random() * (n + 1)))
+		valueSet.add(Math.floor(Math.random() * (questionsArray.length)))
 	}
 	return valueSet
 }
