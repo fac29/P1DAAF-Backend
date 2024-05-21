@@ -35,19 +35,27 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
+let questionsArray: Questions = []
+
 loadData()
   .then((loadedData) => {
-    const questionsArray: Questions = loadedData.questions;
-    console.log(questionsArray);
-
-    app.get("/", (req: Request, res: Response) => {
-      res.json(questionsArray); // Use res.json to send data as a JSON object
-    });
-
-    app.get("/first", (req: Request, res: Response) => {
-      res.json(questionsArray[0]); // Use res.json to send data as a JSON object
-    });
+    questionsArray = loadedData.questions;
+    // console.log(questionsArray);
+    // return questionsArray;
   })
   .catch((err) => {
     console.error("Error loading data:", err);
   });
+
+  app.get("/", (req: Request, res: Response) => {
+    res.json(questionsArray); // Use res.json to send data as a JSON object
+  });
+
+  app.get("/first", (req: Request, res: Response) => {
+    res.json(questionsArray[0]); // Use res.json to send data as a JSON object
+  });
+
+// const testString: string = "Testing saving this data"
+// const saveArray: OuterQuestion = {questions: []}
+console.log(questionsArray)
+  // fs.writeFile("testWriteFile.txt", questionsArray[0]);
