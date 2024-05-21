@@ -1,35 +1,52 @@
-import express, { Express, Request, Response } from 'express'
-import dotenv from 'dotenv'
-import * as fs from 'fs'
+import express, { Express, Request, Response } from "express";
+import dotenv from "dotenv";
+import * as fs from "fs/promises";
 
-dotenv.config()
+dotenv.config();
 
 // Type definition for question
-type difficulty = "easy" | "medium" | "hard"
-type question = {
-		id: number,
-		category: string,
-		difficulty: difficulty,
-		question: string,
-		options: Array<string>,
-		//Worth having an index instead?
-		answer: string,
-		favourited: true,
-		timestamp: Date
+type Difficulty = "easy" | "medium" | "hard";
+
+type Question = {
+  id: number;
+  category: string;
+  difficulty: Difficulty;
+  question: string;
+  options: Array<string>;
+  answer: string;
+  favourited: boolean; // This should be boolean instead of true
+  timestamp: Date;
+};
+
+type Questions = Array<Question>;
+type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
+
+const app: Express = express();
+const port = process.env.PORT || 3001;
+
+async function loadData(): Promise<OuterQuestion> {
+  const fileContent: string = await fs.readFile("data.json", "utf8");
+  return JSON.parse(fileContent);
 }
-type questions = Array<question>
 
-const app: Express = express()
-const port = process.env.PORT || 3001
-
-const data = JSON.parse(fs.readFileSync('data.json', 'utf8'))
-
-const questionsArray:questions = data.questions
-
-app.get('/', (req: Request, res: Response) => {
-	res.send(data)
-})
 
 app.listen(port, () => {
-	console.log(`[server]: Server is running at http://localhost:${port}`)
-})
+  console.log(`[server]: Server is running at http://localhost:${port}`);
+});
+
+loadData()
+  .then((loadedData) => {
+    const questionsArray: Questions = loadedData.questions;
+    console.log(questionsArray);
+
+    app.get("/", (req: Request, res: Response) => {
+      res.json(questionsArray); // Use res.json to send data as a JSON object
+    });
+
+    app.get("/first", (req: Request, res: Response) => {
+      res.json(questionsArray[0]); // Use res.json to send data as a JSON object
+    });
+  })
+  .catch((err) => {
+    console.error("Error loading data:", err);
+  });
