@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import * as fs from 'fs/promises'
 import { create } from 'domain'
 import { determineFilter } from './utils'
+import { deleteQuestion } from "./utils";
 
 dotenv.config()
 
@@ -26,9 +27,9 @@ type OuterQuestion = { questions: Questions } // Adjusted to match the JSON stru
 const app: Express = express()
 const port = process.env.PORT || 3001
 
-async function loadData(): Promise<OuterQuestion> {
-	const fileContent: string = await fs.readFile('data.json', 'utf8')
-	return JSON.parse(fileContent)
+export async function loadData(): Promise<OuterQuestion> {
+  const fileContent: string = await fs.readFile("data.json", "utf8");
+  return JSON.parse(fileContent);
 }
 
 app.listen(port, () => {
