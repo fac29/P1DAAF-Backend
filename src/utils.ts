@@ -1,4 +1,6 @@
+import { stringify } from "querystring";
 import {Questions} from "./index";
+import * as fs from "fs/promises";
 
 type FilterTypes = "difficulty" | "category" | "favourited";
 type Favourited = true | false;
@@ -37,3 +39,10 @@ export function determineFilter(questionsArr: Questions, filter: FilterTypes, wh
 		}
 	  }
     }
+
+export function deleteQuestion(questionsArr: Questions, id: number) {
+let removedQuestionArr = questionsArr.filter(question => question.id !== id);
+let jsonFormatQuestions = {questions: removedQuestionArr};
+let jsonFormatted = JSON.stringify(jsonFormatQuestions)
+ fs.writeFile('data.json', jsonFormatted);
+}
