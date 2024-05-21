@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express'
 import dotenv from 'dotenv'
 import * as fs from 'fs'
+import { determineFilter } from './utils'
 
 dotenv.config()
 
