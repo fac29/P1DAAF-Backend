@@ -58,4 +58,4 @@ loadData()
 // const testString: string = "Testing saving this data"
 // const saveArray: OuterQuestion = {questions: []}
 console.log(questionsArray)
-  // fs.writeFile("testWriteFile.txt", questionsArray[0]);
+  // fs.writeFile("data.json", questionsArray[0]);
