@@ -69,13 +69,14 @@ app.get('/random/:num', async (req: Request, res: Response) => {
 	res.json(questionsDisplay) // Use res.json to send data as a JSON object
 })
 
-app.get('/togglefav/:id', async (req: Request, res: Response) => {
+app.put('/togglefav/:id', async (req: Request, res: Response) => {
 	const id = parseInt(req.params.id)
 	const filecontent = await loadData()
 	let Allquestions = filecontent.questions
 
 	console.log("Previous "+Allquestions[id].favourited )
-	Allquestions[id].favourited = true
+
+	Allquestions[id].favourited = !Allquestions[id].favourited;
 	console.log("Post "+Allquestions[id].favourited )
 
 	res.json(Allquestions) // Use res.json to send data as a JSON object
