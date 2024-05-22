@@ -43,9 +43,6 @@ export function determineFilter(
   }
 }
 
-<<<<<<< HEAD
-
-=======
 export function deleteQuestion(questionsArr: Questions, id: number) {
   let removedQuestionArr = questionsArr.filter(
     (question) => question.id !== id
@@ -55,4 +52,3 @@ export function deleteQuestion(questionsArr: Questions, id: number) {
   fs.writeFile("data.json", jsonFormatted);
 }
 
->>>>>>> main

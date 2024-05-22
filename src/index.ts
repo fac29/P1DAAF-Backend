@@ -11,7 +11,7 @@ dotenv.config();
 // Type definition for question
 type Difficulty = "easy" | "medium" | "hard";
 
-type Question = {
+export type Question = {
   id: number;
   category: string;
   difficulty: Difficulty;
@@ -45,9 +45,7 @@ function createUniqueRandomSet(n: number): Set<number> {
   return valueSet;
 }
 
-let questionsArray: Questions = []
-
-
+let questionsArray: Questions = [];
 
 // enable middleware to parse body of Content-type: application/json
 app.use(express.json());
@@ -79,8 +77,6 @@ app.get("/random/:num", (req: Request, res: Response) => {
     questionsDisplay.push(questionsArray[indexesArray[i]]);
   }
 
-
-  
   res.json(questionsDisplay); // Use res.json to send data as a JSON object
 });
 

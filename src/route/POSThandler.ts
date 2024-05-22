@@ -1,7 +1,7 @@
-import { app, loadData } from "../index";
+import { loadData } from "../index";
 import { Question } from "../index";
 import * as fs from "fs/promises";
-import express, { Express, Request, Response } from "express";
+import { Express } from "express";
 
 export function POSThandler(app: Express) {
   app.post("/create-question", async (req, res) => {
@@ -15,9 +15,9 @@ export function POSThandler(app: Express) {
       res.status(400).send("Request Body is missing");
       return;
     }
-    //console.log(`BEFORE: ${questionsArray}`);
+
     Allquestions.push(newQuestion);
-    //console.log(`AFTER: ${questionsArray}`);
+
     let newQuestionsArray = { questions: Allquestions };
     let JSONstring = JSON.stringify(newQuestionsArray, null, " ");
 
