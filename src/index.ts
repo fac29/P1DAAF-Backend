@@ -3,7 +3,8 @@ import dotenv from 'dotenv'
 import * as fs from 'fs/promises'
 import { create } from 'domain'
 import { determineFilter } from './utils'
-import { deleteQuestion } from "./utils";
+import { deleteQuestion } from './utils'
+import { createUniqueRandomSet } from './utils'
 
 dotenv.config()
 
@@ -28,49 +29,57 @@ const app: Express = express()
 const port = process.env.PORT || 3001
 
 export async function loadData(): Promise<OuterQuestion> {
-  const fileContent: string = await fs.readFile("data.json", "utf8");
-  return JSON.parse(fileContent);
+	const fileContent: string = await fs.readFile('data.json', 'utf8')
+	return JSON.parse(fileContent)
 }
 
 app.listen(port, () => {
 	console.log(`[server]: Server is running at http://localhost:${port}`)
 })
 
-function createUniqueRandomSet(n: number): Set<number> {
-	const valueSet = new Set<number>()
-	while (valueSet.size < n) {
-		valueSet.add(Math.floor(Math.random() * (questionsArray.length)))
-	}
-	return valueSet
-}
 
-let questionsArray: Questions = []
-
-loadData()
-	.then((loadedData) => {
-		questionsArray = loadedData.questions
-	})
-	.catch((err) => {
-		console.error('Error loading data:', err)
-	})
-
-app.get('/', (req: Request, res: Response) => {
-	res.json(questionsArray) // Use res.json to send data as a JSON object
+app.get('/', async (req: Request, res: Response) => {
+	const filecontent = await loadData()
+	let Allquestions = filecontent.questions
+	res.json(Allquestions) // Use res.json to send data as a JSON object
 })
 
-app.get('/first', (req: Request, res: Response) => {
-	res.json(questionsArray[0]) // Use res.json to send data as a JSON object
+app.get('/first', async (req: Request, res: Response) => {
+	const filecontent = await loadData()
+	let Allquestions = filecontent.questions
+	res.json(Allquestions[0]) // Use res.json to send data as a JSON object
 })
 
-app.get('/random/:num', (req: Request, res: Response) => {
+app.get('/random/:num', async (req: Request, res: Response) => {
+
 	const num = parseInt(req.params.num)
-	let questionsDisplay: Questions = []
-	const indexesSet: Set<number> = createUniqueRandomSet(num)
-	const indexesArray: Array<number> = Array.from(indexesSet)
+	const filecontent = await loadData()
+	let Allquestions = filecontent.questions
 
-	for (let i = 0; i < Math.min(num, questionsArray.length); i++) {
-		questionsDisplay.push(questionsArray[indexesArray[i]])
+	let questionsDisplay: Questions = []
+
+	const indexesSet: Set<number> = createUniqueRandomSet(num,Allquestions.length)////ERROR
+	const indexesArray: Array<number> = Array.from(indexesSet)
+	console.log(indexesArray)
+	
+	for (let i = 0; i < Math.min(num, indexesArray.length); i++) {
+		questionsDisplay.push(Allquestions[indexesArray[i]])
 	}
 
 	res.json(questionsDisplay) // Use res.json to send data as a JSON object
+})
+
+app.get('/togglefav/:id', async (req: Request, res: Response) => {
+	const id = parseInt(req.params.id)
+	const filecontent = await loadData()
+	let Allquestions = filecontent.questions
+
+	console.log("Previous "+Allquestions[id].favourited )
+	Allquestions[id].favourited = true
+	console.log("Post "+Allquestions[id].favourited )
+
+	res.json(Allquestions) // Use res.json to send data as a JSON object
+
+	//write the JSON file
+
 })

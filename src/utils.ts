@@ -18,6 +18,15 @@ function filterByFavourited(questionsArr: Questions, Favourited: boolean) {
 }
 
 
+export function createUniqueRandomSet(n: number, indexn: number): Set<number> {
+	const valueSet = new Set<number>()
+	while (valueSet.size < n) {
+		valueSet.add(Math.floor(Math.random() * indexn))
+	}
+	return valueSet
+}
+
+
 export function determineFilter(questionsArr: Questions, filter: FilterTypes, whatToFilterBy: string | Favourited) {
 	if (filter === 'difficulty') {
 		if (typeof whatToFilterBy === 'string') {
