@@ -28,7 +28,8 @@ type OuterQuestion = { questions: Questions } // Adjusted to match the JSON stru
 
 const app: Express = express()
 const port = process.env.PORT || 3001
-
+//middleware to parse body of Content-type: application/json
+app.use(express.json())
 export async function loadData(): Promise<OuterQuestion> {
 	const fileContent: string = await fs.readFile('data.json', 'utf8')
 	return JSON.parse(fileContent)
@@ -40,20 +41,10 @@ app.listen(port, () => {
 
 
 
-// enable middleware to parse body of Content-type: application/json
-app.use(express.json());
-
-POSThandler(app);
-loadData()
-  .then((loadedData) => {
-    questionsArray = loadedData.questions;
-  })
-  .catch((err) => {
-    console.error("Error loading data:", err);
-  });
-
-app.get("/", (req: Request, res: Response) => {
-  res.json(questionsArray); // Use res.json to send data as a JSON object
+app.get("/", async (req: Request, res: Response) => {
+  const filecontent = await loadData()
+	let Allquestions = filecontent.questions
+  res.json(Allquestions); // Use res.json to send data as a JSON object
 });
 
 app.get('/first', async (req: Request, res: Response) => {
@@ -101,8 +92,6 @@ app.get('/togglefav/:id', async (req: Request, res: Response) => {
 
 		Allquestions[index].favourited = !Allquestions[index].favourited
 
-		// Use res.json to send data as a JSON object
-
 		try {
 			const formattedAllQuestions: OuterQuestion = { questions: Allquestions }
 			let JSONstring = JSON.stringify(formattedAllQuestions, null, ' ')
@@ -112,7 +101,6 @@ app.get('/togglefav/:id', async (req: Request, res: Response) => {
 			console.log(error)
 		}
 	}
-	//res.redirect('/')
 })
 
 app.delete('/delete-post/:id', async (req: Request, res: Response) => {
@@ -125,9 +113,12 @@ app.delete('/delete-post/:id', async (req: Request, res: Response) => {
 		deleteQuestion(Allquestions, id)
 		console.log(`LOOK HERE !!! ${JSON.stringify(Allquestions[id - 1])}`)
 		res.status(200).send('Question deleted successfully!')
+    res.redirect('/')
 	} catch (error) {
 		console.log(error)
 		res.status(500).send('Error deleting question!')
 	}
-	res.redirect('/')
+	//res.redirect('/')
 })
+
+POSThandler(app)
