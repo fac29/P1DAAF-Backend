@@ -85,7 +85,6 @@ app.get('/togglefav/:id', async (req: Request, res: Response) => {
 		if (index === -1) {
 			return res.status(500).send('Index incorrect')
 		}
-		console.log('Index: ', index)
 
 		Allquestions[index].favourited = !Allquestions[index].favourited
 
