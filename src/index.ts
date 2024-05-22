@@ -58,16 +58,16 @@ loadData()
     console.error("Error loading data:", err);
   });
 
-let testQuestion: Question = {
-  id: 201,
-  category: "History",
-  difficulty: "hard",
-  question: "When was Princess Fergal born?",
-  options: ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
-  answer: "07/07/1998",
-  favourited: true,
-  timestamp: new Date(),
-};
+// let testQuestion: Question = {
+//   id: 201,
+//   category: "History",
+//   difficulty: "hard",
+//   question: "When was Princess Fergal born?",
+//   options: ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
+//   answer: "07/07/1998",
+//   favourited: true,
+//   timestamp: new Date(),
+// };
 
 app.post("/create-question", async (req, res) => {
   let newQuestion: Question = req.body;
@@ -79,7 +79,8 @@ app.post("/create-question", async (req, res) => {
   //console.log(`BEFORE: ${questionsArray}`);
   questionsArray.push(newQuestion);
   //console.log(`AFTER: ${questionsArray}`);
-  let JSONstring = JSON.stringify(questionsArray, null, " ");
+  let newQuestionsArray = { questions: questionsArray };
+  let JSONstring = JSON.stringify(newQuestionsArray, null, " ");
 
   //write data to the file
   try {
