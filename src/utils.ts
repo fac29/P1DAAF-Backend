@@ -57,33 +57,13 @@ export function determineFilter(
   }
 }
 
-export function editQuestion(
-  questionsArr: Questions,
-  question: Question,
-  fieldToChange: FilterTypes
-) {
+export function editQuestion(questionsArr: Questions, question: Question) {
   const questionId = parseInt(question.id as unknown as string, 10);
 
   let questionToEditIndex = questionsArr.findIndex(
     (ques) => ques.id === questionId
   );
-  if (fieldToChange === "category") {
-    questionsArr[questionToEditIndex].category = "Geography";
-  } else if (fieldToChange === "difficulty") {
-    questionsArr[questionToEditIndex].difficulty = "easy";
-  } else if (fieldToChange === "question") {
-    questionsArr[questionToEditIndex].question =
-      "What is the capital of Argentina?";
-  } else if (fieldToChange === "options") {
-    questionsArr[questionToEditIndex].options = [
-      "London",
-      "Paris",
-      "Santiago",
-      "Buenos Aires",
-    ];
-  } else if (fieldToChange === "answer") {
-    questionsArr[questionToEditIndex].answer = "Buenos Aires";
-  }
+  questionsArr[questionToEditIndex] = question;
 
   const jsonFormatQuestions = { questions: questionsArr };
   const jsonFormatted = JSON.stringify(jsonFormatQuestions);
