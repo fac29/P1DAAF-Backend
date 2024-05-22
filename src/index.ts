@@ -72,13 +72,21 @@ app.get("/random/:num", (req: Request, res: Response) => {
     questionsDisplay.push(questionsArray[indexesArray[i]]);
   }
 
-	res.json(questionsDisplay) // Use res.json to send data as a JSON object
+
+  
+  res.json(questionsDisplay); // Use res.json to send data as a JSON object
 });
 
-app.get('/delete-post/:id', (req: Request, res: Response) => {
-	const id = parseInt(req.params.id)
+app.delete("/delete-post/:id", (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
 
-	deleteQuestion(questionsArray, id)
-
-})
-
+  try {
+    deleteQuestion(questionsArray, id);
+    console.log(`LOOK HERE !!! ${JSON.stringify(questionsArray[id - 1])}`);
+    res.status(200).send("Question deleted successfully!");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error deleting question!");
+  }
+  res.redirect("/");
+});
