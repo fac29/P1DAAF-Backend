@@ -24,6 +24,7 @@ export type Questions = Array<Question>;
 type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
 
 export const app: Express = express();
+
 const port = process.env.PORT || 3001;
 
 // enable middleware to parse body of Content-type: application/json
@@ -69,16 +70,16 @@ let testQuestion: Question = {
 };
 
 app.post("/create-question", async (req, res) => {
-  const newQuestion: Question = req.body;
+  let newQuestion: Question = req.body;
 
   if (!newQuestion) {
     res.status(400).send("Request Body is missing");
     return;
   }
-
+  //console.log(`BEFORE: ${questionsArray}`);
   questionsArray.push(newQuestion);
-
-  let JSONstring = JSON.stringify(questionsArray);
+  //console.log(`AFTER: ${questionsArray}`);
+  let JSONstring = JSON.stringify(questionsArray, null, " ");
 
   //write data to the file
   try {
@@ -89,5 +90,3 @@ app.post("/create-question", async (req, res) => {
     res.status(500).send("Error in adding data to the file");
   }
 });
-
-

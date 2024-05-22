@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "DELETE",
+  "name": "POST",
   "type": "collection",
   "ignore": [
     "node_modules",
