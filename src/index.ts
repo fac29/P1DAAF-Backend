@@ -69,35 +69,25 @@ let testQuestion: Question = {
 };
 
 app.post("/create-question", async (req, res) => {
-  //the thing we will sens
-  questionsArray.push(testQuestion);
+  const newQuestion: Question = req.body;
 
-  console.log(testQuestion);
+  if (!newQuestion) {
+    res.status(400).send("Request Body is missing");
+    return;
+  }
 
-  // if (!testQuestion) {
-  //   res.status(400).send("request body is missing");
-  //   return;
-  // // }
-  // //convert the data to JSON string
+  questionsArray.push(newQuestion);
+
   let JSONstring = JSON.stringify(questionsArray);
 
   //write data to the file
   try {
     await fs.writeFile("./data.json", JSONstring);
     res.status(200).send("Question successfully added!");
-    addQuestion(testQuestion);
   } catch (error) {
     console.log(error);
     res.status(500).send("Error in adding data to the file");
   }
 });
 
-function addQuestion(addNewQuestion: Question) {
-  console.log(`LOOK HERE !!! ${JSON.stringify(questionsArray[5], null, 2)}`);
-  questionsArray.push(addNewQuestion);
-  console.log(questionsArray[questionsArray.length - 1]);
-  return questionsArray;
-  //
-}
 
-//addQuestion(testQuestion);
