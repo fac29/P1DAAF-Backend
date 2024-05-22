@@ -39,8 +39,6 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
-
-
 app.get("/", async (req: Request, res: Response) => {
   const filecontent = await loadData()
 	let Allquestions = filecontent.questions
