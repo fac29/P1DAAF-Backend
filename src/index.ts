@@ -72,8 +72,15 @@ app.get('/random/:num', async (req: Request, res: Response) => {
 
 app.get('/togglefav/:id', async (req: Request, res: Response) => {
 	const id = parseInt(req.params.id)
+
+	//Load existing data
 	const filecontent = await loadData()
 	let Allquestions = filecontent.questions
+
+	// Validate the id
+	if (isNaN(id) || id < 0 || id >= Allquestions.length) {
+		return res.status(400).send('Invalid question id')
+	}
 
 	console.log('Previous ' + Allquestions[id].favourited)
 
@@ -83,14 +90,13 @@ app.get('/togglefav/:id', async (req: Request, res: Response) => {
 	res.json(Allquestions) // Use res.json to send data as a JSON object
 
 	try {
-		//write the JSON file
-		let JSONstring = JSON.stringify(Allquestions)
-		await fs.writeFile('./data2.json', JSONstring)
-		res.status(200).send('Question successfully modified')
+		const formattedAllQuestions: OuterQuestion = { questions: Allquestions }
+		let JSONstring = JSON.stringify(formattedAllQuestions, null, ' ')
+		await fs.writeFile('./dataEdited.json', JSONstring)
 	} catch (error) {
 		console.log(error)
-		res.status(500).send('Error in modifying the question')
 	}
+	//res.redirect('/')
 })
 
 app.delete('/delete-post/:id', async (req: Request, res: Response) => {
