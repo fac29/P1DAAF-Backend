@@ -23,6 +23,14 @@ function filterByFavourited(questionsArr: Questions, Favourited: boolean) {
   return questionsArr.filter((question) => question.favourited === Favourited);
 }
 
+export function createUniqueRandomSet(n: number, indexn: number): Set<number> {
+  const valueSet = new Set<number>();
+  while (valueSet.size < n) {
+    valueSet.add(Math.floor(Math.random() * indexn));
+  }
+  return valueSet;
+}
+
 export function determineFilter(
   questionsArr: Questions,
   filter: FilterTypes,

@@ -1,0 +1,47 @@
+meta {
+  name: posting a question
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3001/create-question
+  body: json
+  auth: none
+}
+
+query {
+  : 
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "id": "700",
+    "category": "History",
+    "difficulty": "easy",
+    "question": "When was Princess Diana Born?",
+    "options": ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
+    "answer": "07/07/1998",
+    "favourited": true,
+    "timestamp": "10/10/10"
+  }
+  
+}
+
+body:text {
+  {
+    "id": 700,
+    "category": "History",
+   "difficulty": "easy",
+    "question": "When was Princess Diana Born?",
+    "options": ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
+    "answer": "07/07/1998",
+    "favourited": true,
+    "timestamp": "10/10/10",
+  };
+  
+}
