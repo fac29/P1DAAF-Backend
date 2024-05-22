@@ -25,6 +25,8 @@ type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON str
 
 export const app: Express = express();
 const port = process.env.PORT || 3001;
+
+// enable middleware to parse body of Content-type: application/json
 app.use(express.json());
 
 export async function loadData(): Promise<OuterQuestion> {
@@ -59,7 +61,7 @@ let testQuestion: Question = {
   id: 201,
   category: "History",
   difficulty: "hard",
-  question: "When was Princess Diana born?",
+  question: "When was Princess Fergal born?",
   options: ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
   answer: "07/07/1998",
   favourited: true,
@@ -67,21 +69,21 @@ let testQuestion: Question = {
 };
 
 app.post("/create-question", async (req, res) => {
-  //the thing we will send
-  testQuestion = req.body;
+  //the thing we will sens
+  questionsArray.push(testQuestion);
 
   console.log(testQuestion);
 
-  if (!testQuestion) {
-    res.status(400).send("request body is missing");
-    return;
-  }
-  //convert the data to JSON string
-  let JSONstring = JSON.stringify(testQuestion);
+  // if (!testQuestion) {
+  //   res.status(400).send("request body is missing");
+  //   return;
+  // // }
+  // //convert the data to JSON string
+  let JSONstring = JSON.stringify(questionsArray);
 
   //write data to the file
   try {
-    await fs.appendFile("../data.json", req.body());
+    await fs.writeFile("./data.json", JSONstring);
     res.status(200).send("Question successfully added!");
     addQuestion(testQuestion);
   } catch (error) {
