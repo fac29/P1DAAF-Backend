@@ -57,11 +57,7 @@ export function determineFilter(
   }
 }
 
-export function editQuestion(
-  questionsArr: Questions,
-  question: Question,
-  fieldToChange: FilterTypes
-) {
+export function editQuestion(questionsArr: Questions, question: Question) {
   const questionId = parseInt(question.id as unknown as string, 10);
 
   let questionToEditIndex = questionsArr.findIndex(

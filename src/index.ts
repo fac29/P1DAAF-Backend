@@ -105,13 +105,12 @@ app.post("/edit-question", async (req, res) => {
   const filecontent = await loadData();
   let Allquestions = filecontent.questions;
   const questionObj: Question = req.body;
-  const fieldToChange = "question";
   if (!questionObj) {
     res.status(400).send("Missing Request body");
     console.log("no body");
   } else {
     try {
-      editQuestion(Allquestions, questionObj, fieldToChange);
+      editQuestion(Allquestions, questionObj);
       res.status(200).send("Question edited successfully!");
     } catch (error) {
       console.log(error);
