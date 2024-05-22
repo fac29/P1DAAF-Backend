@@ -72,5 +72,13 @@ app.get("/random/:num", (req: Request, res: Response) => {
     questionsDisplay.push(questionsArray[indexesArray[i]]);
   }
 
-  res.json(questionsDisplay); // Use res.json to send data as a JSON object
+	res.json(questionsDisplay) // Use res.json to send data as a JSON object
 });
+
+app.get('/delete-post/:id', (req: Request, res: Response) => {
+	const id = parseInt(req.params.id)
+
+	deleteQuestion(questionsArray, id)
+
+})
+
