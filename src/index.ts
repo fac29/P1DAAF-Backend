@@ -5,7 +5,6 @@ import { create } from "domain";
 import { determineFilter } from "./utils";
 import { POSThandler } from "./route/POSThandler";
 import { deleteQuestion } from "./utils";
->>>>>>> main
 
 dotenv.config();
 
