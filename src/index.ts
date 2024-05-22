@@ -1,30 +1,38 @@
+<<<<<<< HEAD
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import * as fs from "fs/promises";
 import { POSThandler } from "./route/POSThandler";
+=======
+import express, { Express, Request, Response } from 'express'
+import dotenv from 'dotenv'
+import * as fs from 'fs/promises'
+import { create } from 'domain'
+import { determineFilter } from './utils'
+import { deleteQuestion } from "./utils";
+>>>>>>> main
 
-dotenv.config();
+dotenv.config()
 
 // Type definition for question
-type Difficulty = "easy" | "medium" | "hard";
+type Difficulty = 'easy' | 'medium' | 'hard'
 
-export type Question = {
-  id: number;
-  category: string;
-  difficulty: Difficulty;
-  question: string;
-  options: Array<string>;
-  answer: string;
-  favourited: boolean; // This should be boolean instead of true
-  timestamp: Date;
-};
+type Question = {
+	id: number
+	category: string
+	difficulty: Difficulty
+	question: string
+	options: Array<string>
+	answer: string
+	favourited: boolean // This should be boolean instead of true
+	timestamp: Date
+}
 
-export type Questions = Array<Question>;
-type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
+export type Questions = Array<Question>
+type OuterQuestion = { questions: Questions } // Adjusted to match the JSON structure
 
-export const app: Express = express();
-
-const port = process.env.PORT || 3001;
+const app: Express = express()
+const port = process.env.PORT || 3001
 
 export async function loadData(): Promise<OuterQuestion> {
   const fileContent: string = await fs.readFile("data.json", "utf8");
@@ -32,23 +40,60 @@ export async function loadData(): Promise<OuterQuestion> {
 }
 
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+	console.log(`[server]: Server is running at http://localhost:${port}`)
+})
 
-// export let questionsArray: Questions = [];
+function createUniqueRandomSet(n: number): Set<number> {
+	const valueSet = new Set<number>()
+	while (valueSet.size < n) {
+		valueSet.add(Math.floor(Math.random() * (questionsArray.length)))
+	}
+	return valueSet
+}
 
-// loadData()
-//   .then((loadedData) => {
-//     questionsArray = loadedData.questions;
-//     //console.log(questionsArray);
+let questionsArray: Questions = []
 
-//     app.get("/first", (req: Request, res: Response) => {
-//       res.json(questionsArray[0]); // Use res.json to send data as a JSON object
-//     });
-//   })
-//   .catch((err) => {
-//     console.error("Error loading data:", err);
-//   });
+
+
+// enable middleware to parse body of Content-type: application/json
+app.use(express.json());
+
+POSThandler(app);
+loadData()
+	.then((loadedData) => {
+		questionsArray = loadedData.questions
+	})
+	.catch((err) => {
+		console.error('Error loading data:', err)
+	})
+
+app.get('/', (req: Request, res: Response) => {
+	res.json(questionsArray) // Use res.json to send data as a JSON object
+})
+
+app.get('/first', (req: Request, res: Response) => {
+	res.json(questionsArray[0]) // Use res.json to send data as a JSON object
+})
+
+app.get('/random/:num', (req: Request, res: Response) => {
+	const num = parseInt(req.params.num)
+	let questionsDisplay: Questions = []
+	const indexesSet: Set<number> = createUniqueRandomSet(num)
+	const indexesArray: Array<number> = Array.from(indexesSet)
+
+	for (let i = 0; i < Math.min(num, questionsArray.length); i++) {
+		questionsDisplay.push(questionsArray[indexesArray[i]])
+	}
+
+	res.json(questionsDisplay) // Use res.json to send data as a JSON object
+})
+
+app.get('/delete-post/:id', (req: Request, res: Response) => {
+	const id = parseInt(req.params.id)
+
+	deleteQuestion(questionsArray, id)
+
+})
 
 app.get("/", async (req: Request, res: Response) => {
   const fileContent = await loadData();
@@ -56,7 +101,3 @@ app.get("/", async (req: Request, res: Response) => {
   res.json(Allquestions); // Use res.json to send data as a JSON object
 });
 
-// enable middleware to parse body of Content-type: application/json
-app.use(express.json());
-
-POSThandler(app);
