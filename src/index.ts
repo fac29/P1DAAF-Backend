@@ -59,7 +59,7 @@ app.get('/random/:num', async (req: Request, res: Response) => {
 	const indexesSet: Set<number> = createUniqueRandomSet(
 		num,
 		Allquestions.length
-	) ////ERROR
+	)
 	const indexesArray: Array<number> = Array.from(indexesSet)
 	console.log(indexesArray)
 
@@ -78,24 +78,27 @@ app.get('/togglefav/:id', async (req: Request, res: Response) => {
 	let Allquestions = filecontent.questions
 
 	// Validate the id
-	if (isNaN(id) || id < 0 || id >= Allquestions.length) {
+	if (isNaN(id) || id < 0) {
 		return res.status(400).send('Invalid question id')
-	}
+	} else {
+		const index: number = Allquestions.findIndex((ques) => ques.id === id)
+		if (index === -1) {
+			return res.status(500).send('Index incorrect')
+		}
+		console.log('Index: ', index)
 
-	console.log('Previous ' + Allquestions[id].favourited)
+		Allquestions[index].favourited = !Allquestions[index].favourited
 
-	Allquestions[id].favourited = !Allquestions[id].favourited
-	console.log('Post ' + Allquestions[id].favourited)
+		// Use res.json to send data as a JSON object
 
-	// Use res.json to send data as a JSON object
-
-	try {
-		const formattedAllQuestions: OuterQuestion = { questions: Allquestions }
-		let JSONstring = JSON.stringify(formattedAllQuestions, null, ' ')
-		await fs.writeFile('./data.json', JSONstring)
-		res.json(Allquestions)
-	} catch (error) {
-		console.log(error)
+		try {
+			const formattedAllQuestions: OuterQuestion = { questions: Allquestions }
+			let JSONstring = JSON.stringify(formattedAllQuestions, null, ' ')
+			await fs.writeFile('./data.json', JSONstring)
+			res.json(Allquestions)
+		} catch (error) {
+			console.log(error)
+		}
 	}
 	//res.redirect('/')
 })
