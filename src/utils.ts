@@ -1,5 +1,5 @@
 import { stringify } from "querystring";
-import { Questions } from "./index";
+import { Questions, Question } from "./index";
 import * as fs from "fs/promises";
 
 type FilterTypes =
@@ -48,6 +48,7 @@ export function determineFilter(
     }
   }
 }
+
 export function editQuestion(
   questionsArr: Questions,
   question: Question,
