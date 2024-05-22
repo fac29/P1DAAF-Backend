@@ -3,14 +3,14 @@ import dotenv from "dotenv";
 import * as fs from "fs/promises";
 import { create } from "domain";
 import { determineFilter } from "./utils";
-import { deleteQuestion } from "./utils";
+import { deleteQuestion, editQuestion } from "./utils";
 
 dotenv.config();
 
 // Type definition for question
 type Difficulty = "easy" | "medium" | "hard";
 
-type Question = {
+export type Question = {
   id: number;
   category: string;
   difficulty: Difficulty;
@@ -72,9 +72,24 @@ app.get("/random/:num", (req: Request, res: Response) => {
     questionsDisplay.push(questionsArray[indexesArray[i]]);
   }
 
-
-  
   res.json(questionsDisplay); // Use res.json to send data as a JSON object
+});
+
+app.post("/edit-question", (req, res) => {
+  const questionObj: Question = req.body;
+  const fieldToChange = "question";
+  if (!questionObj) {
+    res.status(400).send("Missing Request body");
+    console.log("no body");
+  } else {
+    try {
+      editQuestion(questionsArray, questionObj, fieldToChange);
+      res.status(200).send("Question edited successfully!");
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Error editing question.");
+    }
+  }
 });
 
 app.delete("/delete-post/:id", (req: Request, res: Response) => {
