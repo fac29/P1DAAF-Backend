@@ -72,6 +72,8 @@ app.get("/random/:num", (req: Request, res: Response) => {
     questionsDisplay.push(questionsArray[indexesArray[i]]);
   }
 
+
+  
   res.json(questionsDisplay); // Use res.json to send data as a JSON object
 });
 
