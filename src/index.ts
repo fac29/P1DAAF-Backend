@@ -84,3 +84,20 @@ app.put('/togglefav/:id', async (req: Request, res: Response) => {
 	//write the JSON file
 
 })
+
+app.delete("/delete-post/:id", async (req: Request, res: Response) => {
+	const id = parseInt(req.params.id);
+
+	const filecontent = await loadData()
+	let Allquestions = filecontent.questions
+	
+	try {
+	  deleteQuestion(Allquestions, id);
+	  console.log(`LOOK HERE !!! ${JSON.stringify(Allquestions[id - 1])}`);
+	  res.status(200).send("Question deleted successfully!");
+	} catch (error) {
+	  console.log(error);
+	  res.status(500).send("Error deleting question!");
+	}
+	res.redirect("/");
+  });
