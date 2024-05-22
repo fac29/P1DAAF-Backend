@@ -57,3 +57,4 @@ export function deleteQuestion(questionsArr: Questions, id: number) {
 	let jsonFormatted = JSON.stringify(jsonFormatQuestions)
 	fs.writeFile('data.json', jsonFormatted)
 }
+

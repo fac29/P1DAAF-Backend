@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import * as fs from 'fs/promises'
 import { create } from 'domain'
 import { determineFilter } from './utils'
+import { POSThandler } from "./route/POSThandler";
 import { deleteQuestion } from './utils'
 import { createUniqueRandomSet } from './utils'
 
@@ -11,16 +12,16 @@ dotenv.config()
 // Type definition for question
 type Difficulty = 'easy' | 'medium' | 'hard'
 
-type Question = {
-	id: number
-	category: string
-	difficulty: Difficulty
-	question: string
-	options: Array<string>
-	answer: string
-	favourited: boolean // This should be boolean instead of true
-	timestamp: Date
-}
+export type Question = {
+  id: number;
+  category: string;
+  difficulty: Difficulty;
+  question: string;
+  options: Array<string>;
+  answer: string;
+  favourited: boolean; // This should be boolean instead of true
+  timestamp: Date;
+};
 
 export type Questions = Array<Question>
 type OuterQuestion = { questions: Questions } // Adjusted to match the JSON structure
@@ -34,14 +35,26 @@ export async function loadData(): Promise<OuterQuestion> {
 }
 
 app.listen(port, () => {
-	console.log(`[server]: Server is running at http://localhost:${port}`)
-})
+  console.log(`[server]: Server is running at http://localhost:${port}`);
+});
 
-app.get('/', async (req: Request, res: Response) => {
-	const filecontent = await loadData()
-	let Allquestions = filecontent.questions
-	res.json(Allquestions) // Use res.json to send data as a JSON object
-})
+
+
+// enable middleware to parse body of Content-type: application/json
+app.use(express.json());
+
+POSThandler(app);
+loadData()
+  .then((loadedData) => {
+    questionsArray = loadedData.questions;
+  })
+  .catch((err) => {
+    console.error("Error loading data:", err);
+  });
+
+app.get("/", (req: Request, res: Response) => {
+  res.json(questionsArray); // Use res.json to send data as a JSON object
+});
 
 app.get('/first', async (req: Request, res: Response) => {
 	const filecontent = await loadData()
