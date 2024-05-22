@@ -101,6 +101,25 @@ app.get("/togglefav/:id", async (req: Request, res: Response) => {
   }
 });
 
+app.post("/edit-question", async (req, res) => {
+  const filecontent = await loadData();
+  let Allquestions = filecontent.questions;
+  const questionObj: Question = req.body;
+  const fieldToChange = "question";
+  if (!questionObj) {
+    res.status(400).send("Missing Request body");
+    console.log("no body");
+  } else {
+    try {
+      editQuestion(Allquestions, questionObj, fieldToChange);
+      res.status(200).send("Question edited successfully!");
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Error editing question.");
+    }
+  }
+});
+
 app.delete("/delete-post/:id", async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
 
