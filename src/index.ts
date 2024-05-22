@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import * as fs from "fs/promises";
 import { create } from "domain";
 import { determineFilter } from "./utils";
+import { POSThandler } from "./route/POSThandler";
 import { deleteQuestion } from "./utils";
 
 dotenv.config();
@@ -44,8 +45,14 @@ function createUniqueRandomSet(n: number): Set<number> {
   return valueSet;
 }
 
-let questionsArray: Questions = [];
+let questionsArray: Questions = []
 
+
+
+// enable middleware to parse body of Content-type: application/json
+app.use(express.json());
+
+POSThandler(app);
 loadData()
   .then((loadedData) => {
     questionsArray = loadedData.questions;
