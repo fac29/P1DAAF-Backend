@@ -19,17 +19,13 @@
 		"@eslint/js": "^9.3.0",
 		"@types/express": "^4.17.21",
 		"@types/node": "^20.12.12",
-<<<<<<< HEAD
 		"eslint": "^9.3.0",
 		"eslint-config-standard": "^17.1.0",
 		"eslint-plugin-import": "^2.29.1",
 		"eslint-plugin-n": "^16.6.2",
 		"eslint-plugin-promise": "^6.1.1",
-=======
-		"eslint": "^8.57.0",
 		"eslint-plugin-react": "^7.34.1",
 		"globals": "^15.3.0",
->>>>>>> origin/main
 		"nodemon": "^3.1.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5",

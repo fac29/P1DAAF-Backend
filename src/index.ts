@@ -37,7 +37,6 @@ app.listen(port, () => {
 	console.log(`[server]: Server is running at http://localhost:${port}`)
 })
 
-
 app.get('/', async (req: Request, res: Response) => {
 	const filecontent = await loadData()
 	let Allquestions = filecontent.questions
@@ -51,17 +50,19 @@ app.get('/first', async (req: Request, res: Response) => {
 })
 
 app.get('/random/:num', async (req: Request, res: Response) => {
-
 	const num = parseInt(req.params.num)
 	const filecontent = await loadData()
 	let Allquestions = filecontent.questions
 
 	let questionsDisplay: Questions = []
 
-	const indexesSet: Set<number> = createUniqueRandomSet(num,Allquestions.length)////ERROR
+	const indexesSet: Set<number> = createUniqueRandomSet(
+		num,
+		Allquestions.length
+	) ////ERROR
 	const indexesArray: Array<number> = Array.from(indexesSet)
 	console.log(indexesArray)
-	
+
 	for (let i = 0; i < Math.min(num, indexesArray.length); i++) {
 		questionsDisplay.push(Allquestions[indexesArray[i]])
 	}
@@ -69,35 +70,42 @@ app.get('/random/:num', async (req: Request, res: Response) => {
 	res.json(questionsDisplay) // Use res.json to send data as a JSON object
 })
 
-app.put('/togglefav/:id', async (req: Request, res: Response) => {
+app.get('/togglefav/:id', async (req: Request, res: Response) => {
 	const id = parseInt(req.params.id)
 	const filecontent = await loadData()
 	let Allquestions = filecontent.questions
 
-	console.log("Previous "+Allquestions[id].favourited )
+	console.log('Previous ' + Allquestions[id].favourited)
 
-	Allquestions[id].favourited = !Allquestions[id].favourited;
-	console.log("Post "+Allquestions[id].favourited )
+	Allquestions[id].favourited = !Allquestions[id].favourited
+	console.log('Post ' + Allquestions[id].favourited)
 
 	res.json(Allquestions) // Use res.json to send data as a JSON object
 
-	//write the JSON file
-
+	try {
+		//write the JSON file
+		let JSONstring = JSON.stringify(Allquestions)
+		await fs.writeFile('./data2.json', JSONstring)
+		res.status(200).send('Question successfully modified')
+	} catch (error) {
+		console.log(error)
+		res.status(500).send('Error in modifying the question')
+	}
 })
 
-app.delete("/delete-post/:id", async (req: Request, res: Response) => {
-	const id = parseInt(req.params.id);
+app.delete('/delete-post/:id', async (req: Request, res: Response) => {
+	const id = parseInt(req.params.id)
 
 	const filecontent = await loadData()
 	let Allquestions = filecontent.questions
-	
+
 	try {
-	  deleteQuestion(Allquestions, id);
-	  console.log(`LOOK HERE !!! ${JSON.stringify(Allquestions[id - 1])}`);
-	  res.status(200).send("Question deleted successfully!");
+		deleteQuestion(Allquestions, id)
+		console.log(`LOOK HERE !!! ${JSON.stringify(Allquestions[id - 1])}`)
+		res.status(200).send('Question deleted successfully!')
 	} catch (error) {
-	  console.log(error);
-	  res.status(500).send("Error deleting question!");
+		console.log(error)
+		res.status(500).send('Error deleting question!')
 	}
-	res.redirect("/");
-  });
+	res.redirect('/')
+})
