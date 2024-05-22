@@ -87,12 +87,13 @@ app.get('/togglefav/:id', async (req: Request, res: Response) => {
 	Allquestions[id].favourited = !Allquestions[id].favourited
 	console.log('Post ' + Allquestions[id].favourited)
 
-	res.json(Allquestions) // Use res.json to send data as a JSON object
+	// Use res.json to send data as a JSON object
 
 	try {
 		const formattedAllQuestions: OuterQuestion = { questions: Allquestions }
 		let JSONstring = JSON.stringify(formattedAllQuestions, null, ' ')
-		await fs.writeFile('./dataEdited.json', JSONstring)
+		await fs.writeFile('./data.json', JSONstring)
+		res.json(Allquestions)
 	} catch (error) {
 		console.log(error)
 	}
