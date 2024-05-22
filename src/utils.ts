@@ -2,7 +2,13 @@ import { stringify } from "querystring";
 import { Questions } from "./index";
 import * as fs from "fs/promises";
 
-type FilterTypes = "difficulty" | "category" | "favourited";
+type FilterTypes =
+  | "difficulty"
+  | "category"
+  | "favourited"
+  | "question"
+  | "options"
+  | "answer";
 type Favourited = true | false;
 
 function filterByDifficulty(questionsArr: Questions, difficulty: string) {
