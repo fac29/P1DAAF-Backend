@@ -47,7 +47,7 @@ You will need an API client, such as BRUNO or POSTMAN
     this works vice versa. 
 
 
-4. Edit
+4. How to test edit
     use bruno or postman (or any API client)
     make a POST request with this URL: http://localhost:3001/edit-question/
 
@@ -56,7 +56,7 @@ You will need an API client, such as BRUNO or POSTMAN
     { "id": "12", "category": "History", "difficulty": "easy", "question": "When was Princess Diana Born?", "options": ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"], "answer": "07/07/1998", "favourited": true, "timestamp": "10/10/10" } 
     ```
 
-5. You can test random 
+5. How to test random 
     You can test this on the browser
     http://localhost:3001/random/quantity-of-questions-here
 
