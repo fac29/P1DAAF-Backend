@@ -66,7 +66,7 @@ export function editQuestion(questionsArr: Questions, question: Question) {
   questionsArr[questionToEditIndex] = question;
 
   const jsonFormatQuestions = { questions: questionsArr };
-  const jsonFormatted = JSON.stringify(jsonFormatQuestions);
+  const jsonFormatted = JSON.stringify(jsonFormatQuestions, null, " ");
   fs.writeFile("data.json", jsonFormatted);
 }
 
