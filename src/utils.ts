@@ -75,6 +75,6 @@ export function deleteQuestion(questionsArr: Questions, id: number) {
     (question) => question.id !== id
   );
   let jsonFormatQuestions = { questions: removedQuestionArr };
-  let jsonFormatted = JSON.stringify(jsonFormatQuestions);
+  let jsonFormatted = JSON.stringify(jsonFormatQuestions, null, " ");
   fs.writeFile("data.json", jsonFormatted);
 }

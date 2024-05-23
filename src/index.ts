@@ -129,7 +129,7 @@ app.delete("/delete-post/:id", async (req: Request, res: Response) => {
     deleteQuestion(Allquestions, id);
     console.log(`LOOK HERE !!! ${JSON.stringify(Allquestions[id - 1])}`);
     res.status(200).send("Question deleted successfully!");
-    res.redirect("/");
+    // res.redirect("/");
   } catch (error) {
     console.log(error);
     res.status(500).send("Error deleting question!");
