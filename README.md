@@ -1,9 +1,6 @@
 # P1DAAF
 Hello and Welcome to our Quiz App!!!
 
-
-This is the beginning of the backend of our quiz app. 
-
 It currently has functionality to 
 - see a random question
 - see a filtered question by category or difficulty or if favourtited. 
