@@ -7,24 +7,9 @@ import { POSThandler } from './route/POSThandler';
 import { deleteQuestion, editQuestion } from './utils';
 import { createUniqueRandomSet } from './utils';
 import { FILTERhandler } from './route/FILTERhandler';
+import { Question, Questions, OuterQuestion } from './types';
+
 dotenv.config();
-
-// Type definition for question
-type Difficulty = 'easy' | 'medium' | 'hard';
-
-export type Question = {
-	id: number;
-	category: string;
-	difficulty: Difficulty;
-	question: string;
-	options: Array<string>;
-	answer: string;
-	favourited: boolean; // This should be boolean instead of true
-	timestamp: Date;
-};
-
-export type Questions = Array<Question>;
-type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
