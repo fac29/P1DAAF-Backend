@@ -11,12 +11,15 @@ export function POSThandler(app: Express) {
     console.log(Allquestions);
     let newQuestion: Question = req.body;
 
+    console.log(newQuestion)
+
     if (!newQuestion) {
-      res.status(400).send("Request Body is missing");
+     // res.status(400).send("Request Body is missing");
       return;
     }
 
     Allquestions.push(newQuestion);
+
 
     let newQuestionsArray = { questions: Allquestions };
     let JSONstring = JSON.stringify(newQuestionsArray, null, " ");
