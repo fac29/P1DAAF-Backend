@@ -1,5 +1,5 @@
 import { loadData } from "../index";
-import { Question } from "../index";
+import { Question } from "../types";
 import * as fs from "fs/promises";
 import { Express } from "express";
 

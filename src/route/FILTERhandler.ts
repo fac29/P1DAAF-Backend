@@ -1,9 +1,8 @@
 import { loadData } from '../index';
-import { Question } from '../index';
 import * as fs from 'fs/promises';
 import { Express } from 'express';
 import { determineFilter } from '../utils';
-import { FilterTypes } from '../types';
+import { FilterTypes, Question } from '../types';
 
 
 export function FILTERhandler(app: Express) {
