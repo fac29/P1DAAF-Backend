@@ -2,7 +2,10 @@ import { loadData } from '../index';
 import { Question } from '../index';
 import * as fs from 'fs/promises';
 import { Express } from 'express';
-import { FilterTypes, determineFilter } from '../utils';
+import { determineFilter } from '../utils';
+import { FilterTypes } from '../types';
+
+
 export function FILTERhandler(app: Express) {
 	app.get('/filter/:filterType/:subFilterType', async (req, res) => {
 		const fileContent = await loadData();
