@@ -30,12 +30,6 @@ app.get('/', async (req: Request, res: Response) => {
 	res.json(Allquestions); // Use res.json to send data as a JSON object
 });
 
-app.get('/first', async (req: Request, res: Response) => {
-	const filecontent = await loadData();
-	let Allquestions = filecontent.questions;
-	res.json(Allquestions[0]); // Use res.json to send data as a JSON object
-});
-
 app.get('/random/:num', async (req: Request, res: Response) => {
 	const num = parseInt(req.params.num);
 	const filecontent = await loadData();
