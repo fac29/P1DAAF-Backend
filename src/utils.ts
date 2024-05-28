@@ -1,17 +1,34 @@
-import { Questions, Question, FilterTypes,Favourited } from './types';
+import {
+	Questions,
+	Question,
+	CategoryFilterTypes,
+	Favourited,
+	Difficulty,
+} from './types';
 import * as fs from 'fs/promises';
 
 function filterByDifficulty(questionsArr: Questions, difficulty: string) {
-	return questionsArr.filter((question) => question.difficulty === difficulty);
+	if (difficulty === 'all') {
+		return questionsArr;
+	} else {
+		return questionsArr.filter(
+			(question) => question.difficulty === difficulty
+		);
+	}
 }
 
-function filterByCategory(questionsArr: Questions, category: string) {
+function filterByCategory(
+	questionsArr: Questions,
+	category: CategoryFilterTypes
+) {
 	return questionsArr.filter((question) => question.category === category);
 }
 
 function filterByFavourited(questionsArr: Questions, Favourited: boolean) {
 	return questionsArr.filter((question) => question.favourited === Favourited);
 }
+
+//console.log(filterByFavourited(Questions, true))
 
 export function createUniqueRandomSet(n: number, indexn: number): Set<number> {
 	const valueSet = new Set<number>();
@@ -21,30 +38,26 @@ export function createUniqueRandomSet(n: number, indexn: number): Set<number> {
 	return valueSet;
 }
 
+//determine category filter
 export function determineFilter(
 	questionsArr: Questions,
-	filter: FilterTypes,
-	whatToFilterBy: string | Favourited
+	categoryFilter: CategoryFilterTypes,
+	difficulty: Difficulty
 ) {
-	if (filter === 'difficulty') {
-		if (typeof whatToFilterBy === 'string') {
-			return filterByDifficulty(questionsArr, whatToFilterBy);
-		} else {
-			throw new Error('Expected a string for difficulty filter');
-		}
-	} else if (filter === 'category') {
-		if (typeof whatToFilterBy === 'string') {
-			return filterByCategory(questionsArr, whatToFilterBy);
-		} else {
-			throw new Error('Expected a string for category filter');
-		}
-	} else if (filter === 'favourited') {
-		if (typeof whatToFilterBy === 'boolean') {
-			return filterByFavourited(questionsArr, whatToFilterBy);
-		} else {
-			throw new Error('Expected a boolean for favourited filter');
-		}
+	let result1: Question[] = [];
+	let result2: Question[] = [];
+
+	if (categoryFilter === 'Favourited') {
+		result1 = filterByFavourited(questionsArr, true);
+		console.log(result1);
+		result2 = filterByDifficulty(result1, difficulty);
+	} else {
+		result1 = filterByCategory(questionsArr, categoryFilter);
+		//console.log(result);
+		result2 = filterByDifficulty(result1, difficulty);
 	}
+
+	return result2;
 }
 
 export function editQuestion(questionsArr: Questions, question: Question) {
