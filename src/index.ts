@@ -7,24 +7,9 @@ import { POSThandler } from './route/POSThandler';
 import { deleteQuestion, editQuestion } from './utils';
 import { createUniqueRandomSet } from './utils';
 import { FILTERhandler } from './route/FILTERhandler';
+import { Question, Questions, OuterQuestion } from './types';
+
 dotenv.config();
-
-// Type definition for question
-type Difficulty = 'easy' | 'medium' | 'hard';
-
-export type Question = {
-	id: number;
-	category: string;
-	difficulty: Difficulty;
-	question: string;
-	options: Array<string>;
-	answer: string;
-	favourited: boolean; // This should be boolean instead of true
-	timestamp: Date;
-};
-
-export type Questions = Array<Question>;
-type OuterQuestion = { questions: Questions }; // Adjusted to match the JSON structure
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
@@ -129,12 +114,12 @@ app.delete('/delete-post/:id', async (req: Request, res: Response) => {
 		deleteQuestion(Allquestions, id);
 		console.log(`LOOK HERE !!! ${JSON.stringify(Allquestions[id - 1])}`);
 		res.status(200).send('Question deleted successfully!');
-		// res.redirect("/");
+		
 	} catch (error) {
 		console.log(error);
 		res.status(500).send('Error deleting question!');
 	}
-	//res.redirect('/')
+
 });
 
 POSThandler(app);

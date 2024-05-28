@@ -1,15 +1,5 @@
-import { stringify } from 'querystring';
-import { Questions, Question } from './index';
+import { Questions, Question, FilterTypes,Favourited } from './types';
 import * as fs from 'fs/promises';
-
-export type FilterTypes =
-	| 'difficulty'
-	| 'category'
-	| 'favourited'
-	| 'question'
-	| 'options'
-	| 'answer';
-type Favourited = true | false;
 
 function filterByDifficulty(questionsArr: Questions, difficulty: string) {
 	return questionsArr.filter((question) => question.difficulty === difficulty);
