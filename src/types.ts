@@ -5,11 +5,11 @@ export type CategoryFilterTypes =
 	| 'Mathematics'
 	| 'Pop Culture'
 	| 'Music'
-	| 'Literature';
-
+	| 'Literature'
+	| 'Favourited';
 export type Favourited = true | false;
 
-export type Difficulty = 'easy' | 'medium' | 'hard';
+export type Difficulty = 'easy' | 'medium' | 'hard' | 'all';
 
 export type Question = {
 	id: number;

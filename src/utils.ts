@@ -8,7 +8,13 @@ import {
 import * as fs from 'fs/promises';
 
 function filterByDifficulty(questionsArr: Questions, difficulty: string) {
-	return questionsArr.filter((question) => question.difficulty === difficulty);
+	if (difficulty === 'all') {
+		return questionsArr;
+	} else {
+		return questionsArr.filter(
+			(question) => question.difficulty === difficulty
+		);
+	}
 }
 
 function filterByCategory(
@@ -21,6 +27,8 @@ function filterByCategory(
 function filterByFavourited(questionsArr: Questions, Favourited: boolean) {
 	return questionsArr.filter((question) => question.favourited === Favourited);
 }
+
+//console.log(filterByFavourited(Questions, true))
 
 export function createUniqueRandomSet(n: number, indexn: number): Set<number> {
 	const valueSet = new Set<number>();
@@ -36,10 +44,20 @@ export function determineFilter(
 	categoryFilter: CategoryFilterTypes,
 	difficulty: Difficulty
 ) {
-	let result = filterByCategory(questionsArr, categoryFilter);
-	console.log(result);
-	let result2 = filterByDifficulty(result, difficulty);
-	return result2
+	let result1: Question[] = [];
+	let result2: Question[] = [];
+
+	if (categoryFilter === 'Favourited') {
+		result1 = filterByFavourited(questionsArr, true);
+		console.log(result1);
+		result2 = filterByDifficulty(result1, difficulty);
+	} else {
+		result1 = filterByCategory(questionsArr, categoryFilter);
+		//console.log(result);
+		result2 = filterByDifficulty(result1, difficulty);
+	}
+
+	return result2;
 }
 
 export function editQuestion(questionsArr: Questions, question: Question) {
