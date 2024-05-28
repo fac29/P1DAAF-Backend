@@ -18,8 +18,9 @@ export function POSThandler(app: Express) {
 
 		Allquestions.push(newQuestion);
 
-		let newQuestionsArray = { questions: Allquestions };
-		let JSONstring = JSON.stringify(newQuestionsArray, null, ' ');
+
+    let newQuestionsArray = { questions: Allquestions };
+    let JSONstring = JSON.stringify(newQuestionsArray, null, " ");
 
 		//write data to the files
 		try {
