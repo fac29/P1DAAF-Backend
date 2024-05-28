@@ -1,11 +1,20 @@
-import { Questions, Question, FilterTypes,Favourited } from './types';
+import {
+	Questions,
+	Question,
+	CategoryFilterTypes,
+	Favourited,
+	Difficulty,
+} from './types';
 import * as fs from 'fs/promises';
 
 function filterByDifficulty(questionsArr: Questions, difficulty: string) {
 	return questionsArr.filter((question) => question.difficulty === difficulty);
 }
 
-function filterByCategory(questionsArr: Questions, category: string) {
+function filterByCategory(
+	questionsArr: Questions,
+	category: CategoryFilterTypes
+) {
 	return questionsArr.filter((question) => question.category === category);
 }
 
@@ -21,30 +30,16 @@ export function createUniqueRandomSet(n: number, indexn: number): Set<number> {
 	return valueSet;
 }
 
+//determine category filter
 export function determineFilter(
 	questionsArr: Questions,
-	filter: FilterTypes,
-	whatToFilterBy: string | Favourited
+	categoryFilter: CategoryFilterTypes,
+	difficulty: Difficulty
 ) {
-	if (filter === 'difficulty') {
-		if (typeof whatToFilterBy === 'string') {
-			return filterByDifficulty(questionsArr, whatToFilterBy);
-		} else {
-			throw new Error('Expected a string for difficulty filter');
-		}
-	} else if (filter === 'category') {
-		if (typeof whatToFilterBy === 'string') {
-			return filterByCategory(questionsArr, whatToFilterBy);
-		} else {
-			throw new Error('Expected a string for category filter');
-		}
-	} else if (filter === 'favourited') {
-		if (typeof whatToFilterBy === 'boolean') {
-			return filterByFavourited(questionsArr, whatToFilterBy);
-		} else {
-			throw new Error('Expected a boolean for favourited filter');
-		}
-	}
+	let result = filterByCategory(questionsArr, categoryFilter);
+	console.log(result);
+	let result2 = filterByDifficulty(result, difficulty);
+	return result2
 }
 
 export function editQuestion(questionsArr: Questions, question: Question) {

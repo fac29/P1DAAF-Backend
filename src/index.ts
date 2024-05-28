@@ -7,7 +7,7 @@ import { POSThandler } from './route/POSThandler';
 import { deleteQuestion, editQuestion } from './utils';
 import { createUniqueRandomSet } from './utils';
 import { FILTERhandler } from './route/FILTERhandler';
-import { Question, Questions, OuterQuestion } from './types';
+import { Question, Questions, OuterQuestion } from "./types";
 
 dotenv.config();
 
