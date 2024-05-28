@@ -12,6 +12,7 @@ import ALLhandler from './route/ALLhandler'
 import RANDOMhandler from './route/RANDOMhandler'
 import TOGGLEFAVhandler from './route/TOGGLEFAVhandler'
 import DELETEhandler from './route/DELETEhandler'
+import EDIThandler from './route/EDIThandler'
 
 dotenv.config()
 
@@ -29,39 +30,25 @@ app.listen(port, () => {
 })
 
 
-app.post('/edit-question', async (req, res) => {
-	const filecontent = await loadData()
-	let Allquestions = filecontent.questions
-	const questionObj: Question = req.body
-	if (!questionObj) {
-		res.status(400).send('Missing Request body')
-		console.log('no body')
-	} else {
-		try {
-			editQuestion(Allquestions, questionObj)
-			res.status(200).send('Question edited successfully!')
-		} catch (error) {
-			console.log(error)
-			res.status(500).send('Error editing question.')
-		}
-	}
-})
-
-// app.delete('/delete-post/:id', async (req: Request, res: Response) => {
-// 	const id = parseInt(req.params.id)
-
+// app.post('/edit-question', async (req, res) => {
 // 	const filecontent = await loadData()
 // 	let Allquestions = filecontent.questions
-
-// 	try {
-// 		deleteQuestion(Allquestions, id)
-// 		console.log(`LOOK HERE !!! ${JSON.stringify(Allquestions[id - 1])}`)
-// 		res.status(200).send('Question deleted successfully!')
-// 	} catch (error) {
-// 		console.log(error)
-// 		res.status(500).send('Error deleting question!')
+// 	const questionObj: Question = req.body
+// 	if (!questionObj) {
+// 		res.status(400).send('Missing Request body')
+// 		console.log('no body')
+// 	} else {
+// 		try {
+// 			editQuestion(Allquestions, questionObj)
+// 			res.status(200).send('Question edited successfully!')
+// 		} catch (error) {
+// 			console.log(error)
+// 			res.status(500).send('Error editing question.')
+// 		}
 // 	}
 // })
+
+
 
 POSThandler(app)
 FILTERhandler(app)
@@ -69,3 +56,4 @@ ALLhandler(app)
 RANDOMhandler(app)
 TOGGLEFAVhandler(app)
 DELETEhandler(app)
+EDIThandler(app)
