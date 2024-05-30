@@ -14,6 +14,10 @@ dotenv.config()
 
 const app: Express = express()
 const port = process.env.PORT || 3001
+
+const cors = require('cors');
+app.use(cors());
+
 //middleware to parse body of Content-type: application/json
 app.use(express.json())
 export async function loadData(): Promise<OuterQuestion> {
