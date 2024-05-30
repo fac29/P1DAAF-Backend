@@ -15,6 +15,7 @@ dotenv.config()
 const app: Express = express()
 const port = process.env.PORT || 3001
 
+//Installed to access from frontend
 const cors = require('cors');
 app.use(cors());
 
