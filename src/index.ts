@@ -9,12 +9,16 @@ import RANDOMhandler from "./route/RANDOMhandler";
 import TOGGLEFAVhandler from "./route/TOGGLEFAVhandler";
 import DELETEhandler from "./route/DELETEhandler";
 import EDIThandler from "./route/EDIThandler";
-import { GETbyid } from "./route/GETbyid";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
+
+//Installed to access from frontend
+const cors = require("cors");
+app.use(cors());
+
 //middleware to parse body of Content-type: application/json
 app.use(express.json());
 export async function loadData(): Promise<OuterQuestion> {
