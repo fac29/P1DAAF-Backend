@@ -9,6 +9,7 @@ import RANDOMhandler from "./route/RANDOMhandler";
 import TOGGLEFAVhandler from "./route/TOGGLEFAVhandler";
 import DELETEhandler from "./route/DELETEhandler";
 import EDIThandler from "./route/EDIThandler";
+import { GETbyid } from "./route/GETbyid";
 
 dotenv.config();
 
