@@ -23,9 +23,9 @@ const port = process.env.PORT || 3000
 
 // Read SSL certificate and key files
 const options = {
-	key: fs.readFileSync(path.join(__dirname, '../localhost-key.pem')),
-	cert: fs.readFileSync(path.join(__dirname, '../localhost.pem')),
-}
+  key: fs.readFileSync("/etc/ssl/private/selfsigned.key"),
+  cert: fs.readFileSync("/etc/ssl/certs/selfsigned.crt"),
+};
 
 // Create HTTPS server
 const server = https.createServer(options, app)
