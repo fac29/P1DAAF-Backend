@@ -1,36 +1,6 @@
 {
  "questions": [
   {
-   "id": 1,
-   "category": "Science",
-   "difficulty": "easy",
-   "question": "What is the chemical symbol for Hydrogen?",
-   "options": [
-    "H",
-    "He",
-    "Hy",
-    "Ho"
-   ],
-   "answer": "H",
-   "favourited": true,
-   "timestamp": "2023-04-01T10:00:00Z"
-  },
-  {
-   "id": 2,
-   "category": "Geography",
-   "difficulty": "medium",
-   "question": "What is the capital city of France?",
-   "options": [
-    "Paris",
-    "London",
-    "Berlin",
-    "Madrid"
-   ],
-   "answer": "Paris",
-   "favourited": false,
-   "timestamp": "2023-04-01T10:05:00Z"
-  },
-  {
    "id": 3,
    "category": "History",
    "difficulty": "hard",
@@ -1488,9 +1458,14 @@
   {
    "id": "702",
    "category": "History",
-			"difficulty": "hard",
+   "difficulty": "hard",
    "question": "When was Princess Diana Born?",
-			"options": ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
+   "options": [
+    "01/07/1998",
+    "07/07/1998",
+    "02/02/1961",
+    "09/09/1990"
+   ],
    "answer": "07/07/1998",
    "favourited": true,
    "timestamp": "10/10/10"
@@ -1583,6 +1558,36 @@
    "answer": "Paris",
    "favourited": false,
    "timestamp": "2023-04-01T10:05:00Z"
+  },
+  {
+   "id": "107",
+   "category": "Geography",
+   "difficulty": "hard",
+   "question": "Which river flows through London?",
+   "options": [
+    "Danube",
+    "Seine",
+    "Thames",
+    "Rhine"
+   ],
+   "answer": "Thames",
+   "favourited": false,
+   "timestamp": "2023-04-01T18:15:00Z"
+  },
+  {
+   "id": 107,
+   "category": "Geography",
+   "difficulty": "hard",
+   "question": "Which river flows through London?",
+   "options": [
+    "Danube",
+    "Seine",
+    "Thames",
+    "Rhine"
+   ],
+   "answer": "Thames",
+   "favourited": false,
+   "timestamp": "2023-04-01T18:15:00Z"
   }
  ]
 }
