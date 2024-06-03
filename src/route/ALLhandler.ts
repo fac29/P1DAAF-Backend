@@ -1,5 +1,6 @@
 import { Express } from 'express'
 import { loadData } from '../index'
+require('dotenv').config()
 
 export function ALLhandler(app: Express) {
 	app.get('/', async (req, res) => {
