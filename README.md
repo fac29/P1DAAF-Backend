@@ -94,6 +94,11 @@ The user is able to filter questions by difficult, topic, favourites or just see
 
 Generate Private keys for HTTPS:
 On the project root execute:
+
+
+Create folders "keys/certs" on the root
+mkdir -p keys/certs
+
 openssl genpkey -algorithm RSA -out keys/selfsigned.key
 openssl req -new -key keys/selfsigned.key -out keys/selfsigned.csr
 openssl x509 -req -in keys/selfsigned.csr -signkey keys/selfsigned.key -out keys/certs/selfsigned.crt -days 365

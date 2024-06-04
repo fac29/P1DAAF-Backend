@@ -25,8 +25,8 @@ const porthttps = process.env.PORTHTTPS || 8443
 
 // Read SSL certificate and key files
 const options = {
-	key: fs.readFileSync(path.resolve(__dirname, '../Mykeys/selfsigned.key')),
-	cert: fs.readFileSync(path.resolve(__dirname, '../Mykeys/certs/selfsigned.crt')),
+	key: fs.readFileSync(path.resolve(__dirname, '../keys/selfsigned.key')),
+	cert: fs.readFileSync(path.resolve(__dirname, '../keys/certs/selfsigned.crt')),
   };
 
 // Create HTTPS server
