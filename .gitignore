@@ -2,6 +2,9 @@
 .env
 QuizKeyPar.pem
 QuizKeyPar.ppk
+selfsigned.csr
+selfsigned.key
+/keys/certs/
 
 # Keys to connect to EC2 Instance
 QuizKeyPar.ppk

@@ -92,3 +92,15 @@ flowchart TD
 The user is able to filter questions by difficult, topic, favourites or just see random questions. 
 
 
+Generate Private keys for HTTPS:
+On the project root execute:
+openssl genpkey -algorithm RSA -out keys/selfsigned.key
+openssl req -new -key keys/selfsigned.key -out keys/selfsigned.csr
+openssl x509 -req -in keys/selfsigned.csr -signkey keys/selfsigned.key -out keys/certs/selfsigned.crt -days 365
+
+
+Common Name:
+    on the ec2 instance is the IP address: 18.175.120.83
+    for local testing: localhost
+
+
