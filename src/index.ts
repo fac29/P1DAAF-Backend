@@ -52,11 +52,11 @@ export async function loadData(): Promise<OuterQuestion> {
 }
 
 app.listen(port, () => {
-	console.log(`[server]: Server is running at http://localhost:${port}`)
+	console.log(`[server]: Server is running at ${port}`)
 })
 
 serverHTTPS.listen(porthttps, () => {
-	console.log(`[server]: HTTPS Server is running at http://localhost:${porthttps}`)
+	console.log(`[server]: HTTPS Server is running at ${porthttps}`)
 })
 
 POSThandler(app)
