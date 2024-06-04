@@ -108,4 +108,10 @@ Common Name:
     on the ec2 instance is the IP address: 18.175.120.83
     for local testing: localhost
 
+For easy upadate the code on the EC2 instance without losing the keys folder add it to the local exclude:
+    nano .git/info/exclude
+
+    Add there:
+        keys/
+
 
