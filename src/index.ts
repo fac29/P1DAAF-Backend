@@ -18,45 +18,34 @@ import path = require('path')
 dotenv.config()
 
 const app: Express = express()
-const apphttps: Express = express()
 
 const port = process.env.PORT || 3000
-const porthttps = process.env.PORTHTTPS || 8443
 
 // Read SSL certificate and key files
 const options = {
-	key: fs.readFileSync(path.resolve(__dirname, '../keys/selfsigned.key')),
-	cert: fs.readFileSync(path.resolve(__dirname, '../keys/certs/selfsigned.crt')),
-  };
+  key: fs.readFileSync("/etc/ssl/private/selfsigned.key"),
+  cert: fs.readFileSync("/etc/ssl/certs/selfsigned.crt"),
+};
 
 // Create HTTPS server
-const serverHTTPS = https.createServer(options, apphttps)
-
+const server = https.createServer(options, app)
 
 //Installed to access from frontend
 const cors = require('cors')
 app.use(cors())
-apphttps.use(cors())
 
 // Middleware
 app.use(morgan('dev'))
-apphttps.use(morgan('dev'))
 
 //middleware to parse body of Content-type: application/json
 app.use(express.json())
-apphttps.use(express.json())
-
 export async function loadData(): Promise<OuterQuestion> {
 	const fileContent: string = await fs.promises.readFile('data.json', 'utf8')
 	return JSON.parse(fileContent)
 }
 
-app.listen(port, () => {
-	console.log(`[server]: Server is running at ${port}`)
-})
-
-serverHTTPS.listen(porthttps, () => {
-	console.log(`[server]: HTTPS Server is running at ${porthttps}`)
+server.listen(port, () => {
+	console.log(`[server]: Server is running at http://localhost:${port}`)
 })
 
 POSThandler(app)
@@ -67,12 +56,3 @@ TOGGLEFAVhandler(app)
 DELETEhandler(app)
 EDIThandler(app)
 GETbyid(app)
-
-POSThandler(apphttps)
-FILTERhandler(apphttps)
-ALLhandler(apphttps)
-RANDOMhandler(apphttps)
-TOGGLEFAVhandler(apphttps)
-DELETEhandler(apphttps)
-EDIThandler(apphttps)
-GETbyid(apphttps)

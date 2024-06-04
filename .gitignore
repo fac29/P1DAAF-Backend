@@ -1,8 +1,7 @@
 /node_modules/
 .env
-selfsigned.csr
-selfsigned.key
-
+QuizKeyPar.pem
+QuizKeyPar.ppk
 
 # Keys to connect to EC2 Instance
 QuizKeyPar.ppk
