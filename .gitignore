@@ -3,6 +3,10 @@
 QuizKeyPar.pem
 QuizKeyPar.ppk
 
+# Keys to connect to EC2 Instance
+QuizKeyPar.ppk
+QuizKeyPar.pem
+
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
