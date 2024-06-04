@@ -1,105 +1,144 @@
 # P1DAAF
 
-![TypeScript](https://img.shields.io/badge/TypeScript-v4.5-blue)
-![Node.js](https://img.shields.io/badge/Node.js-v16-green)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue)
+![Node.js](https://img.shields.io/badge/TS--Node-blue)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 Hello and Welcome to our Quiz App! Built with typescript, node deployed on AWS. Tested with POSTMAN
 
-## Functionality includes:
+A RESTful API built with TypeScript and Node.js for managing a bank of questions. This API allows users to check, add, edit, and delete questions. It is tested using Postman.
+
+## Table of Contents
+
+- [Functionality](#functionality)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Functionality
 
 - See all questions
 - See a random question
 - Create a question
 - Delete a question
-- How to favourite and unfavourite
+- Favourite and unfavourite a question
 - Edit a question
-- See a filtered question by category, difficulty, ID or if favourite.
+- See a filtered question by category, difficulty, ID or if favourited.
 
-**How to test**
+## Installation
 
-1. clone the repo
-2. run `npm install`
-3. run `npm run dev`
+1.  **Clone the repository:**
 
-You will need an API client, such as BRUNO or POSTMAN.
+    ```sh
+    git clone https://github.com/fac29/P1DAAF-Backend.git
+    cd P1DAAF-Backend
+    ```
 
-### 1. How to get all questions:
+2.  **Install dependencies:**
 
-Send a POST request to the URL of `http://localhost:3000/`
+    ```sh
+    npm install
+    ```
 
-### 2. How to See a Random Question
+3.  **Set up environment variables:**
 
-You can test this on the browser
-`http://localhost:3000/random/quantity-of-questions-here`
+    Create a `.env` file in the root directory and add your configuration settings.
 
-### 3. How to test Creating a Question (POST request):
+    ```env
+    PORT=3000
+    ```
 
-Use bruno or postman (or any API client).
-Make a POST request with this URL: `http://localhost:3000/create-question`
-Here is a test JSON to add to the body of the request:
+4.  **Run the application:**
+
+    ```sh
+    npm start
+    ```
+
+## Usage
+
+### Running the Server
+
+To start the server, use the following command:
+
+```sh
+npm run dev
+```
+
+The server will run on the port specified in the `.env` file. If no port is specified, it will default to `3000`.
+
+### API Endpoints
+
+#### Get all questions
+
+```http
+GET /api/questions
+```
+
+#### Get a single question by ID
+
+```http
+GET /api/questions/:id
+```
+
+#### Add a new question
+
+```http
+POST /api/questions
+```
+
+**Request Body:**
 
 ```json
 {
-  "id": "704",
+  "id": 704,
   "category": "History",
   "difficulty": "easy",
   "question": "When was Princess Diana Born?",
   "options": ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
   "answer": "07/07/1998",
   "favourited": true,
-  "timestamp": "10/10/10"
+  "timestamp": "2023-01-01T00:00:00Z"
 }
 ```
 
-You should get a success message.
+#### Edit a question
 
-### 4. How to test Delete:
+Use a question that exists in the database already but use the format as below.
 
-use bruno or postman (or any API client)
-make a DELETE request with this URL: `http://localhost:3000/delete-post/question-id-number-here`
+```http
+PUT /api/questions/:id
+```
 
-you should get a success message --> also you can check the data.json file, to see if the obj with that id is GONEEE.
-
-### 5. How to test Favourtire/ Unfavourite
-
-Check an object that has a field of favourite: false
-Use bruno or postman (or any API client)
-Make a PUT request with this URL: `http://localhost:3000/togglefav/question-id-number-here`
-
-You should get a success message --> also you can check the data.json file, to see if the obj with that id in the favourite field has updated with the opposite ( favourite:true )
-
-this works vice versa.
-
-### 6. How to test edit (POST request)
-
-use bruno or postman (or any API client)
-make a POST request with this URL: `http://localhost:3000/edit-question/`
-
-here is a test JSON to add to the body of the request:
+**Request Body:**
 
 ```json
 {
-  "id": "12",
+  "id": 704,
   "category": "History",
   "difficulty": "easy",
   "question": "When was Princess Diana Born?",
   "options": ["01/07/1998", "07/07/1998", "02/02/1961", "09/09/1990"],
   "answer": "07/07/1998",
   "favourited": true,
-  "timestamp": "10/10/10"
+  "timestamp": "2023-01-01T00:00:00Z"
 }
 ```
 
-### 7. Filtered questions (GET request)
+#### Delete a question
 
-To filter by category and difficulty:
+```http
+DELETE /api/questions/:id
+```
 
-`http://localhost:3000/filter/:category/:difficulty`
+## Testing
 
-To get a question by ID:
+To test the API endpoints, you can use [Postman](https://www.postman.com/).
 
-`http://localhost:3000/get-question-by-id/:id`
+1. Import the Postman collection provided in the repository.
+2. Run the requests to test various endpoints.
 
 ## Here is a flow of the user journey:
 
@@ -133,3 +172,18 @@ flowchart TD
 ```
 
 The user is able to filter questions by difficult, topic, favourites or just see random questions.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
