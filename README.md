@@ -187,3 +187,24 @@ Contributions are welcome! Please follow these steps to contribute:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Generate Private keys for HTTPS:
+On the project root execute:
+
+## Instructions to use HTTPS locally
+
+Create folders "keys/certs" on the root
+mkdir -p keys/certs
+
+openssl genpkey -algorithm RSA -out keys/selfsigned.key
+openssl req -new -key keys/selfsigned.key -out keys/selfsigned.csr
+openssl x509 -req -in keys/selfsigned.csr -signkey keys/selfsigned.key -out keys/certs/selfsigned.crt -days 365
+
+Common Name:
+on the ec2 instance is the IP address: 18.175.120.83
+for local testing: localhost
+
+For easy upadate the code on the EC2 instance without losing the keys folder add it to the local exclude:
+nano .git/info/exclude
+
+    Add there:
+        keys/
