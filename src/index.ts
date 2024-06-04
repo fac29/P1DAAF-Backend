@@ -21,7 +21,7 @@ const app: Express = express()
 const apphttps: Express = express()
 
 const port = process.env.PORT || 3000
-const porthttps = process.env.PORTHTTPS || 443
+const porthttps = process.env.PORTHTTPS || 8443
 
 // Read SSL certificate and key files
 const options = {
