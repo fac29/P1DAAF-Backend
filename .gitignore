@@ -1,5 +1,7 @@
 /node_modules/
 .env
+
+# Keys to connect to EC2 Instance
 QuizKeyPar.ppk
 QuizKeyPar.pem
 
