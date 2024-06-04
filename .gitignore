@@ -6,6 +6,7 @@ selfsigned.csr
 selfsigned.key
 
 keys/certs/
+!keys/
 
 # Keys to connect to EC2 Instance
 QuizKeyPar.ppk
