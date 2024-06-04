@@ -23,28 +23,60 @@ const apphttps: Express = express()
 const port = process.env.PORT || 3000
 const porthttps = process.env.PORTHTTPS || 8443
 
-// Read SSL certificate and key files
-const options = {
-	key: fs.readFileSync(path.resolve(__dirname, '../keys/selfsigned.key')),
-	cert: fs.readFileSync(path.resolve(__dirname, '../keys/certs/selfsigned.crt')),
-  };
+// Function to check if SSL files exist
+const sslFilesExist = (keyPath: string, certPath: string): boolean => {
+    return fs.existsSync(keyPath) && fs.existsSync(certPath);
+};
 
-// Create HTTPS server
-const serverHTTPS = https.createServer(options, apphttps)
+const keyPath = path.resolve(__dirname, '../keys/selfsigned.key');
+const certPath = path.resolve(__dirname, '../keys/certs/selfsigned.crt');
+
+if (sslFilesExist(keyPath, certPath)) {
+    // Read SSL certificate and key files
+    const options = {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath),
+    };
+
+    // Create HTTPS server
+    const serverHTTPS = https.createServer(options, apphttps);
+
+    serverHTTPS.listen(porthttps, () => {
+        console.log(`[server]: HTTPS Server is running at https://localhost:${porthttps}`);
+    });
+
+    // Installed to access from frontend
+    const cors = require('cors');
+    apphttps.use(cors());
+
+    // Middleware
+    apphttps.use(morgan('dev'));
+    apphttps.use(express.json());
+
+    // Register handlers for HTTPS app
+    POSThandler(apphttps);
+    FILTERhandler(apphttps);
+    ALLhandler(apphttps);
+    RANDOMhandler(apphttps);
+    TOGGLEFAVhandler(apphttps);
+    DELETEhandler(apphttps);
+    EDIThandler(apphttps);
+    GETbyid(apphttps);
+} else {
+    console.log('[server]: SSL key or certificate not found. HTTPS server will not be started.');
+}
+
 
 
 //Installed to access from frontend
 const cors = require('cors')
 app.use(cors())
-apphttps.use(cors())
 
 // Middleware
 app.use(morgan('dev'))
-apphttps.use(morgan('dev'))
 
 //middleware to parse body of Content-type: application/json
 app.use(express.json())
-apphttps.use(express.json())
 
 export async function loadData(): Promise<OuterQuestion> {
 	const fileContent: string = await fs.promises.readFile('data.json', 'utf8')
@@ -55,9 +87,6 @@ app.listen(port, () => {
 	console.log(`[server]: Server is running at ${port}`)
 })
 
-serverHTTPS.listen(porthttps, () => {
-	console.log(`[server]: HTTPS Server is running at ${porthttps}`)
-})
 
 POSThandler(app)
 FILTERhandler(app)
