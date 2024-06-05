@@ -7,12 +7,12 @@ const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 const uniqueQuestions = [];
 const ids = new Set();
 
-data.questions.forEach(question => {
+data.questions.forEach((question) => {
   // Convert id to number if it's a string
   if (typeof question.id === 'string') {
     question.id = parseInt(question.id, 10);
   }
-  
+
   // Check for duplicate ids
   if (!ids.has(question.id)) {
     ids.add(question.id);
