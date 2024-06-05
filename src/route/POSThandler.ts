@@ -10,21 +10,45 @@ export function POSThandler(app: Express) {
 		let Allquestions = fileContent.questions;
 		// console.log(Allquestions);
 		let newQuestion: Question = req.body;
-
+		const category = req.body.category;
+		const difficulty = req.body.difficulty;
 		const question = req.body.question;
 		const options = req.body.options;
 		const answer = req.body.answer;
 		const errors: {
+			category?: string;
 			question?: string;
 			options?: string;
 			answer?: string;
 		} = {};
 
-		if (!question) {
-			errors.question = 'Please enter a question';
+		if (
+			!(
+				category === 'Science' ||
+				category === 'Geography' ||
+				category === 'History' ||
+				category === 'Mathematics' ||
+				category === 'Pop Culture' ||
+				category === 'Music' ||
+				category === 'Literature' ||
+				category === 'Favourited'
+			)
+		) {
+			errors.category = 'Invalid category';
 		}
+		if (
+			!(
+				difficulty === 'easy' ||
+				difficulty === 'medium' ||
+				difficulty === 'hard' ||
+				difficulty === 'all'
+			)
+		)
+			if (!question) {
+				errors.question = 'Please enter a question';
+			}
 		//I didn't know how to make it an array, becuase the req.body is a string
-		if (!options) {
+		if (options.length !== 4) {
 			errors.options = 'Please enter 4 options';
 		}
 
