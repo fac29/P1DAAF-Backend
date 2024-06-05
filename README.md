@@ -74,19 +74,25 @@ The server will run on the port specified in the `.env` file. If no port is spec
 #### Get all questions
 
 ```http
-GET /api/questions
+GET http://localhost:3000/
+```
+
+#### Get random question/questions
+
+```http
+GET http://localhost:3000/random/:Quantity
 ```
 
 #### Get a single question by ID
 
 ```http
-GET /api/questions/:id
+GET http://localhost:3000/get-question-by-id/:QuestionID
 ```
 
 #### Add a new question
 
 ```http
-POST /api/questions
+POST http://localhost:3000/create-question/
 ```
 
 **Request Body:**
@@ -109,7 +115,7 @@ POST /api/questions
 Use a question that exists in the database already but use the format as below.
 
 ```http
-PUT /api/questions/:id
+PUT http://localhost:3000/edit-question
 ```
 
 **Request Body:**
@@ -130,7 +136,13 @@ PUT /api/questions/:id
 #### Delete a question
 
 ```http
-DELETE /api/questions/:id
+DELETE http://localhost:3000/delete-post/:QuestionID
+```
+
+#### Filter questions
+
+```http
+GET http://localhost:3000/filter/:category/:difficulty
 ```
 
 ## Testing
@@ -203,7 +215,7 @@ Common Name:
 on the ec2 instance is the IP address: 18.175.120.83
 for local testing: localhost
 
-For easy upadate the code on the EC2 instance without losing the keys folder add it to the local exclude:
+For easy update the code on the EC2 instance without losing the keys folder add it to the local exclude:
 nano .git/info/exclude
 
     Add there:
