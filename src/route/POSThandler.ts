@@ -48,7 +48,7 @@ export function POSThandler(app: Express) {
 				errors.question = 'Please enter a question';
 			}
 		//I didn't know how to make it an array, becuase the req.body is a string
-		if (options.length !== 4) {
+		if (!Array.isArray(options) || options.length !== 4) {
 			errors.options = 'Please enter 4 options';
 		}
 
