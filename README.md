@@ -50,13 +50,7 @@ A RESTful API built with TypeScript and Node.js for managing a bank of questions
     ```env
     PORT=3000
     ```
-
-4.  **Run the application:**
-
-    ```sh
-    npm start
-    ```
-
+    
 ## Usage
 
 ### Running the Server
